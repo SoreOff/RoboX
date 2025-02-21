@@ -5,7 +5,6 @@ from datetime import datetime
 import asyncio
 import aiohttp
 import os
-import time
 
 def extract_urls_from_robots(content):
     urls = set()
@@ -24,15 +23,13 @@ async def fetch_robots_content(session, timestamp, url):
     try:
         async with session.get(wayback_url, timeout=10) as response:
             if response.status == 200:
-                content = await response.text()
-                return content
+                return await response.text()
     except:
         pass
     return None
 
 class URLSaver:
     def __init__(self, host):
-        timestamp = datetime.now().strftime('%Y%m%d_%H%M%S')
         self.txt_filename = f'{host}_urls.txt'
         self.json_filename = f'{host}_urls.json'
         self.all_urls = set()
@@ -52,13 +49,15 @@ class URLSaver:
                 }, f, indent=2)
     
     def save_batch(self, new_urls, processed_count, total_count):
-        if not new_urls:
+        new_unique_urls = new_urls - self.all_urls  # حذف URLهای تکراری
+        
+        if not new_unique_urls:
             return
         
-        self.all_urls.update(new_urls)
+        self.all_urls.update(new_unique_urls)
         
         with open(self.txt_filename, 'a') as f:
-            for url in sorted(new_urls):
+            for url in sorted(new_unique_urls):
                 if url.startswith('/'):
                     url = f'https://{self.host}{url}'
                 f.write(f'{url}\n')
@@ -75,7 +74,7 @@ class URLSaver:
         with open(self.json_filename, 'w') as f:
             json.dump(data, f, indent=2)
         
-        print(f'[+] Found {len(new_urls)} new URLs (Total unique: {len(self.all_urls)})')
+        print(f'[+] Found {len(new_unique_urls)} new URLs (Total unique: {len(self.all_urls)})')
         print(f'[+] Progress: {processed_count}/{total_count} versions processed')
 
 async def get_all_robots_urls(host, batch_size=50):
