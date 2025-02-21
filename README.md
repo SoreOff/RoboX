@@ -46,6 +46,10 @@ The `batch_size` parameter determines how many `robots.txt` versions are process
 - `<domain>_urls_<timestamp>.txt` → Contains a list of extracted URLs
 - `<domain>_urls_<timestamp>.json` → Includes additional information such as execution time, total versions processed, and total URLs found
 
+## Available Languages 🌍  
+- [English](README.md)  
+- [Kurdish](README.ku.md) 
+
 ## License ⚖️
 
 This project is licensed under the MIT License.
