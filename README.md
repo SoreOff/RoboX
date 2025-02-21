@@ -37,6 +37,10 @@ python3 robox.py example.com
 python3 robox.py example.com 100
 ```
 
+### What is `batch_size`? ⚙️
+
+The `batch_size` parameter determines how many `robots.txt` versions are processed at the same time. A higher value speeds up processing but may put more load on the server. The default value is `50`.
+
 ## Output 📂
 
 - `<domain>_urls_<timestamp>.txt` → Contains a list of extracted URLs
