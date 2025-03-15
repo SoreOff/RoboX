@@ -147,9 +147,9 @@ async def main_with_retry(host, batch_size, max_retries=5, retry_delay=10):
 
 def main():
     if len(sys.argv) not in [2, 3]:
-        print('Usage:\n\tpython3 wayback_robots_urls.py <domain> [batch_size]')
-        print('Example:\n\tpython3 wayback_robots_urls.py example.com')
-        print('\tpython3 wayback_robots_urls.py example.com 100')
+        print('Usage:\n\tpython3 RoboX.py <domain> [batch_size]')
+        print('Example:\n\tpython3 RoboX.py example.com')
+        print('\tpython3 RoboX.py example.com 100')
         sys.exit(1)
     
     host = sys.argv[1]
